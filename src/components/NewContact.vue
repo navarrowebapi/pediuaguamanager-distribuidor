@@ -7,7 +7,7 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item">
-            <img src="../assets/excelente_logo.png" alt="Logo">
+            <img src="../assets/logo.png" alt="Logo">
           </a>
           <span class="navbar-burger burger" data-target="navbarMenuHeroA">
             <span></span>
@@ -38,83 +38,131 @@
     <div class="container">
 
 <form @submit.prevent="saveContact">
-      <div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Dados</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <p class="control is-expanded">
-        <input class="input" type="text" placeholder="Nome" v-model="Notificacao.firstname" required>
-        <span class="icon is-small is-left">
-          <i class="fa fa-user"></i>
-        </span>
-      </p>
+      <div class="field-label is-normal">
+      <label class="label">Dados da Empresa</label>
     </div>
-    <div class="field">
-      <p class="control is-expanded">
-        <input class="input" type="text" placeholder="CPF" v-model="Notificacao.CPF" required>
-        <span class="icon is-small is-left">
-          <i class="fa fa-envelope"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fa fa-check"></i>
-        </span>
-      </p>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label"></div>
-  <div class="field-body">
-    <div class="field is-expanded">
-      <div class="field has-addons">
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
         <p class="control is-expanded">
-          <input class="input" type="tel" placeholder="celular" v-model="Notificacao.phonenumber">
+          <input class="input" type="text" placeholder="Nome" v-model="Distribuidor.Nome" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
         </p>
       </div>
-    </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="CNPJ" v-model="Distribuidor.CNPJ" required>
+        </p>
+      </div>
   </div>
 </div>
 
 <div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">ID-Excelente</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input class="input" type="text" placeholder="Registro interno" v-model="Notificacao.registro">
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="CEP" v-model="Distribuidor.CEP" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fa fa-check"></i>
+          </span>
+        </p>
       </div>
-    </div>
+      <div class="field">
+       
+        <label class="label">Marcas comercializadas</label>
+
+        <div id="marcasagua" >
+          <input type="checkbox" id="aguaboa" value="aguaboa" v-model="Distribuidor.Marcas">
+          <label for="jack">ÁguaBoa</label>
+          <input type="checkbox" id="Bioleve" value="Bioleve" v-model="Distribuidor.Marcas">
+          <label for="john">Bioleve</label>
+          <input type="checkbox" id="Bonafont" value="Bonafont" v-model="Distribuidor.Marcas">
+          <label for="mike">Bonafont</label>
+            <input type="checkbox" id="Cristal" value="Cristal" v-model="Distribuidor.Marcas">
+          <label for="jack">Cristal</label>
+          <input type="checkbox" id="Vitalícia" value="Vitalícia" v-model="Distribuidor.Marcas">
+          <label for="john">Vitalícia</label>
+          <input type="checkbox" id="Sofiazinha" value="Sofiazinha" v-model="Distribuidor.Marcas">
+          <label for="mike">Sofiazinha</label>
+              <input type="checkbox" id="Prata" value="Prata" v-model="Distribuidor.Marcas">
+          <label for="jack">Prata</label>
+          <input type="checkbox" id="Nestlé" value="Nestlé" v-model="Distribuidor.Marcas">
+          <label for="john">Nestlé</label>
+          <input type="checkbox" id="SantaRita" value="SantaRita" v-model="Distribuidor.Marcas">
+          <label for="mike">SantaRita</label>
+          <br>
+          <!-- <span>Marcas definidas: {{ Distribuidor.Marcas }}</span> -->
+        </div>
+
+      </div>
+</div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded">
+          <input class="input" type="text" placeholder="Rua" v-model="Distribuidor.Rua" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Número" v-model="Distribuidor.Numero" required>
+        </p>
+      </div>
+  </div>
+</div>
+
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded">
+          <input class="input" type="text" placeholder="Bairro" v-model="Distribuidor.Bairro" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Cidade" v-model="Distribuidor.Cidade" required>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Estado" v-model="Distribuidor.Estado" required>
+        </p>
+      </div>
   </div>
 </div>
 
 <div class="field is-horizontal">
   <div class="field-label">
-    <label class="label">Horário</label>
+    <!-- Left empty for spacing -->
   </div>
   <div class="field-body">
-    <div class="field is-narrow">
-    <h3>Defina o horário de almoço</h3>
-     <div class="field is-horizontal">
-  <div class="field-body">
-    <div class="field">
-      <p class="control is-expanded">
-        <input class="input" type="text" placeholder="Início almoço" v-model="Notificacao.inicioAlmoco">
-      </p>
-    </div>
-    <div class="field">
-      <p class="control is-expanded">
-        <input class="input" type="text" placeholder="Fim almoço" v-model="Notificacao.fimAlmoco">
-      </p>
-    </div>
+             <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="E-mail" v-model="Distribuidor.Email" required>
+        </p>
+      </div>
+         <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Fixo" v-model="Distribuidor.Fixo" required>
+        </p>
+      </div>
+
   </div>
 </div>
-    </div>
-  </div>
-</div>
+
+
 
 
 <div class="field is-horizontal">
@@ -122,9 +170,15 @@
     <!-- Left empty for spacing -->
   </div>
   <div class="field-body">
+
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Cel" v-model="Distribuidor.Celular" required>
+        </p>
+      </div>
     <div class="field">
       <div class="control">
-           <button type="submit" class="button is-primary">Salvar</button>
+           <button type="submit" class="button is-primary ">Salvar</button>
       </div>
     </div>
   </div>
@@ -148,18 +202,33 @@ export default {
   name: "new-contact",
   data() {
     return {
-      Notificacao: {
-        firstname: null,
-        CPF: null,
-        registro: null,
-        phonenumber: null,
-        seen: false,
-        inicioAlmoco: "12:00:00",
-        fimAlmoco: "13:00:00"
+      Distribuidor: {
+        Nome: null,
+        CNPJ: null,
+        CEP: null,
+        Rua: null,
+        Numero: null,
+        Bairro: null,
+        Cidade: null,
+        Estado: null,
+        Fixo: null,
+        Celular: null,
+        Email: null,
+        Marcas: []
       }
     };
   },
-  
+  computed: {
+    myLanguages: function() {
+      return this.Marcas
+        .filter(function(l) {
+          return l.selected;
+        })
+        .map(function(l) {
+          return l.Nome;
+        });
+    }
+  },
   methods: {
     logOut() {
       firebase.auth().signOut();
@@ -167,14 +236,20 @@ export default {
     },
     saveContact() {
       db
-        .collection("notificacoes")
+        .collection("distribuidor")
         .add({
-          firstname: this.Notificacao.firstname,
-          CPF: this.Notificacao.CPF,
-          registro: this.Notificacao.registro,
-          phonenumber: this.Notificacao.phonenumber,
-          inicioAlmoco: this.Notificacao.inicioAlmoco,
-          fimAlmoco: this.Notificacao.fimAlmoco
+          Nome: this.Distribuidor.Nome,
+          CNPJ: this.Distribuidor.CNPJ,
+          CEP: this.Distribuidor.CEP,
+          Rua: this.Distribuidor.Rua,
+          Numero: this.Distribuidor.Numero,
+          Bairro: this.Distribuidor.Bairro,
+          Cidade: this.Distribuidor.Cidade,
+          Estado: this.Distribuidor.Estado,
+          Fixo: this.Distribuidor.Email,
+          Celular: this.Distribuidor.Celular,
+          Email: this.Distribuidor.Email,
+          Marcas: []
         })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);

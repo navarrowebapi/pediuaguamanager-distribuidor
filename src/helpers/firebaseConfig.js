@@ -1,9 +1,11 @@
 export const config = {
-    apiKey: "AIzaSyB8EzZlT2d5VEcpkqrTkot_7m115POE9xA",
-    authDomain: "excelentemanager.firebaseapp.com",
-    databaseURL: "https://excelentemanager.firebaseio.com",
-    projectId: "excelentemanager",
-    storageBucket: "excelentemanager.appspot.com",
-    messagingSenderId: "223493886387"
+  apiKey: "AIzaSyAeqBtmbaWwivwzfIGmFalFmkFZ9A-YJSk",
+  authDomain: "pediuaguadistribuidormanager.firebaseapp.com",
+  databaseURL: "https://pediuaguadistribuidormanager.firebaseio.com",
+  projectId: "pediuaguadistribuidormanager",
+  storageBucket: "pediuaguadistribuidormanager.appspot.com",
+  messagingSenderId: "936033122751"
   }
   
+
+

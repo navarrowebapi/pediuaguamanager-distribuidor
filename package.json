@@ -1,6 +1,6 @@
 {
-  "name": "excelentemanager",
-  "description": "A Vue.js project",
+  "name": "Gerenciador do Distribuidor",
+  "description": "Administração de cada distribuidor",
   "version": "1.0.0",
   "author": "navarro.fabio@gmail.com <navarro.fabio@gmail.com>",
   "license": "MIT",
