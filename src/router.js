@@ -15,6 +15,8 @@ const router = new VueRouter({
         
         { path: '/add', component : NewContact},
 
+        { path: '/distribuidores', component : ViewContact},
+
     ]
 
 });

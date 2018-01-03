@@ -16,7 +16,7 @@ export default {
     },
     created(){
         this.user = firebase.auth().currentUser;
-        this.$router.push('add') 
+        this.$router.push('distribuidores') 
         if(this.user){
             this.name = this.user.displayName;
             

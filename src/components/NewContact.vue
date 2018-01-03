@@ -218,17 +218,6 @@ export default {
       }
     };
   },
-  computed: {
-    myLanguages: function() {
-      return this.Marcas
-        .filter(function(l) {
-          return l.selected;
-        })
-        .map(function(l) {
-          return l.Nome;
-        });
-    }
-  },
   methods: {
     logOut() {
       firebase.auth().signOut();
@@ -249,7 +238,7 @@ export default {
           Fixo: this.Distribuidor.Email,
           Celular: this.Distribuidor.Celular,
           Email: this.Distribuidor.Email,
-          Marcas: []
+          Marcas: this.Distribuidor.Marcas
         })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
@@ -258,10 +247,6 @@ export default {
             position: "top-center",
             duration: 2000
           });
-          // this.Notificacao.firstname = "";
-          // this.Notificacao.CPF = "";
-          // this.Notificacao.registro = "";
-          // this.Notificacao.phonenumber = "";
         })
         .catch(function(error) {
           console.error("Error adding document: ", error);
