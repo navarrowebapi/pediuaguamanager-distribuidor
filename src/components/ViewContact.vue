@@ -112,7 +112,7 @@ export default {
     // db.collection("distribuidor").doc("VRRsIl2VhBeQZ6fJ4Smv")
     // .onSnapshot(function(doc) {
     //     console.log("Current data: ", doc.data().CNPJ );
-    // });
+    // });  
     db.collection("distribuidor").onSnapshot(querySnapshot => {
       this.loading = false;
        this.dists = [];
