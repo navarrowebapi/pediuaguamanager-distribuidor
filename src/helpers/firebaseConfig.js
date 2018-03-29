@@ -1,10 +1,10 @@
 export const config = {
-  apiKey: "AIzaSyAeqBtmbaWwivwzfIGmFalFmkFZ9A-YJSk",
-  authDomain: "pediuaguadistribuidormanager.firebaseapp.com",
-  databaseURL: "https://pediuaguadistribuidormanager.firebaseio.com",
-  projectId: "pediuaguadistribuidormanager",
-  storageBucket: "pediuaguadistribuidormanager.appspot.com",
-  messagingSenderId: "936033122751"
+  apiKey: "AIzaSyALMI7pi-U_ZNxERQzwmuYi-oU7tELAl4c",
+  authDomain: "pediuaguamobileapp.firebaseapp.com",
+  databaseURL: "https://pediuaguamobileapp.firebaseio.com",
+  projectId: "pediuaguamobileapp",
+  storageBucket: "",
+  messagingSenderId: "836786935618"
   }
   
 

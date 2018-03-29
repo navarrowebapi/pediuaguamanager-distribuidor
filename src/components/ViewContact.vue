@@ -2,7 +2,7 @@
   <section class="container">
     <div class="columns">
       <div class="column is-8">
-        <h1>Distribuidores</h1>
+        <h1>Distribuidor ÁguaJá</h1>
 
         <div class="loader-section" v-if="loading">
           <div class="user-list">
@@ -13,7 +13,7 @@
                 <p class="user-list__sub animated-background__sub"></p>
               </div>
               <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">View Person</router-link>
+                <router-link class="button is-primary" to="/user">Atender</router-link>
               </div>
             </div>
           </div>
@@ -26,7 +26,7 @@
                 <p class="user-list__sub animated-background__sub"></p>
               </div>
               <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">View Person</router-link>
+                <router-link class="button is-primary" to="/user">Atender</router-link>
               </div>
             </div>
           </div>
@@ -39,7 +39,7 @@
                 <p class="user-list__sub animated-background__sub"></p>
               </div>
               <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">View Person</router-link>
+                <router-link class="button is-primary" to="/user">Atender</router-link>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
                 <p class="user-list__sub animated-background__sub"></p>
               </div>
               <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">Ver Distribuidor</router-link>
+                <router-link class="button is-primary" to="/user">Atender</router-link>
               </div>
             </div>
           </div>
@@ -71,9 +71,9 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="column is-4 right">
-              <router-link class="button is-primary" v-bind:to="{ name: 'view-contact', params: { d: d.id }}">View Person</router-link>
-            </div> -->
+            <div class="column is-4 right">
+              <router-link class="button is-primary" v-bind:to="{ name: 'view-contact', params: { d: d.id }}">Atender</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -109,28 +109,33 @@ export default {
     //window.location.reload();
   },
   created() {
-    // db.collection("distribuidor").doc("VRRsIl2VhBeQZ6fJ4Smv")
-    // .onSnapshot(function(doc) {
-    //     console.log("Current data: ", doc.data().CNPJ );
-    // });  
-    db.collection("distribuidor").onSnapshot(querySnapshot => {
-      this.loading = false;
-       this.dists = [];
-      //this.dists = doc.data();
-      querySnapshot.forEach(doc => {
-        // let data = {
-        //   id: doc.id,
-        //   Nome: doc.data().Nome,
-        //   CNPJ: doc.data().CNPJ,
-        //   Email: doc.data().Email,
-        //   Fixo: doc.data().Fixo,
-        //   Celular: doc.data().Celular
-        // };
-        this.dists.push(doc.data())
-        //this.dists.push(doc.data());
-        //window.location.reload();
-      });
-    });
+
+    let teste = db.collection('pedidos');
+    console.log(teste);
+
+    // // db.collection("distribuidor").doc("VRRsIl2VhBeQZ6fJ4Smv")
+    // // .onSnapshot(function(doc) {
+    // //     console.log("Current data: ", doc.data().CNPJ );
+    // // });  
+    // db.collection("pedidos").onSnapshot(querySnapshot => {
+    //   this.loading = false;
+    //    this.dists = [];
+    //   //this.dists = doc.data();
+    //   querySnapshot.forEach(doc => {
+    //     // let data = {
+    //     //   id: doc.id,
+    //     //   Nome: doc.data().Nome,
+    //     //   CNPJ: doc.data().CNPJ,
+    //     //   Email: doc.data().Email,
+    //     //   Fixo: doc.data().Fixo,
+    //     //   Celular: doc.data().Celular
+    //     // };
+    //     this.dists.push(doc.data())
+    //     console.log(doc.data())
+    //     //this.dists.push(doc.data());
+    //     //window.location.reload();
+    //   });
+    // });
   }
 };
 </script>
