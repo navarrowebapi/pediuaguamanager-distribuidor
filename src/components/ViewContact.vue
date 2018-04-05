@@ -1,141 +1,101 @@
 <template>
   <section class="container">
-    <div class="columns">
-      <div class="column is-8">
+
         <h1>Distribuidor ÁguaJá</h1>
+  <button class="button is-danger"  v-on:click="userFilterKey = 'allAdmin'" :class="{ active: userFilterKey == 'allAdmin' }">Geral</button>
+  <button class="button is-primary"  v-on:click="userFilterKey = 'all'" :class="{ active: userFilterKey == 'all' }">Distribuidor logado</button>
+  <button class="button is-link" v-on:click="userFilterKey = 'nearby'" :class="{ active: userFilterKey == 'nearby' }">Atendidos</button>
 
-        <div class="loader-section" v-if="loading">
-          <div class="user-list">
-            <div class="columns">
-              <div class="column is-8">
-                <p class="user-list__header animated-background__header"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-              </div>
-              <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">Atender</router-link>
-              </div>
-            </div>
-          </div>
+<table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID interno</th>
+              <th>Distribuidor</th>
+              <th>Cliente</th>
+              <th>Qtde 10 litros</th>
+              <th>Qtde 20 litros</th>
+              <th>Data e hora</th>
+              <th>Atender</th>
+              <th>Tempo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="ped in userFilter">
+              <td>{{ped['.key']}}</td>
+              <td>{{ped.idDistribuidor}}</td>
+              <td>{{ped.idCliente}}</td>
+              <td>{{ped.qtde10}}</td>
+              <td>{{ped.qtde20}}</td>
+              <td>{{moment(ped.timeStamp).format("DD-MM-YYYY HH:mm:ss")}}</td>
+              <td><button type="button" class="button is-warning"  @click="atender(ped['.key'])">Atender</button></td>
+              <td>{{ moment(ped.timeStamp).fromNow()}}</td>
+            </tr>
+          </tbody>
+        </table>
 
-          <div class="user-list">
-            <div class="columns">
-              <div class="column is-8">
-                <p class="user-list__header animated-background__header"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-              </div>
-              <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">Atender</router-link>
-              </div>
-            </div>
-          </div>
 
-          <div class="user-list">
-            <div class="columns">
-              <div class="column is-8">
-                <p class="user-list__header animated-background__header"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-              </div>
-              <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">Atender</router-link>
-              </div>
-            </div>
-          </div>
-
-          <div class="user-list">
-            <div class="columns">
-              <div class="column is-8">
-                <p class="user-list__header animated-background__header"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-                <p class="user-list__sub animated-background__sub"></p>
-              </div>
-              <div class="column is-4 right">
-                <router-link class="button is-primary" to="/user">Atender</router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="user-list" v-for="d in dists">
-          <div class="columns">
-            <div class="column is-8">
-              <p class="user-list__header">{{d.Nome}} {{d.CNPJ}}</p>
-              <div class="inner">
-                <div class="left">
-                  <p class="user-list__sub"><strong>Email</strong>: {{d.Email}}</p>
-                </div>
-                <div class="right">
-                  <p class="user-list__sub"><strong>Fixo</strong>: {{d.Fixo}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="column is-4 right">
-              <router-link class="button is-primary" v-bind:to="{ name: 'view-contact', params: { d: d.id }}">Atender</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 
 </template>
 
 <script>
-import db from "./firebaseInit";
-// var ref = db.collection("distribuidor");
+import * as moment from "moment";
+import "moment/locale/pt-br";
+import firebase from "firebase";
+var config = {
+  apiKey: "AIzaSyALMI7pi-U_ZNxERQzwmuYi-oU7tELAl4c",
+  authDomain: "pediuaguamobileapp.firebaseapp.com",
+  databaseURL: "https://pediuaguamobileapp.firebaseio.com",
+  projectId: "pediuaguamobileapp",
+  storageBucket: "",
+  messagingSenderId: "836786935618"
+};
 
-// var observer = ref.onSnapshot(
-//   docSnapshot => {
-//     console.log(`Received doc snapshot: ${docSnapshot}`);
-//     dists = docSnapshot;
-//   },
-//   err => {
-//     console.log(`Encountered error: ${err}`);
-//   }
-// );
+firebase.initializeApp(config);
+var pedidosDb = firebase.database().ref("pedidos");
 
 export default {
   name: "home",
 
+  firebase: {
+    pedidos: pedidosDb
+  },
+
   data() {
     return {
-      dists: [],
-      loading: true
+      pedidos: "",
+      userFilterKey: "all",
+      moment: moment
     };
   },
-  updated() {
-    //window.location.reload();
+   created(){
+        console.log(firebase.auth().currentUser.uid);
+    },
+
+  methods: {
+    atender: function(key) {
+      pedidosDb.child(key).update({
+        atendido: true
+      });
+    }
   },
-  created() {
-
-    let teste = db.collection('pedidos');
-    console.log(teste);
-
-    // // db.collection("distribuidor").doc("VRRsIl2VhBeQZ6fJ4Smv")
-    // // .onSnapshot(function(doc) {
-    // //     console.log("Current data: ", doc.data().CNPJ );
-    // // });  
-    // db.collection("pedidos").onSnapshot(querySnapshot => {
-    //   this.loading = false;
-    //    this.dists = [];
-    //   //this.dists = doc.data();
-    //   querySnapshot.forEach(doc => {
-    //     // let data = {
-    //     //   id: doc.id,
-    //     //   Nome: doc.data().Nome,
-    //     //   CNPJ: doc.data().CNPJ,
-    //     //   Email: doc.data().Email,
-    //     //   Fixo: doc.data().Fixo,
-    //     //   Celular: doc.data().Celular
-    //     // };
-    //     this.dists.push(doc.data())
-    //     console.log(doc.data())
-    //     //this.dists.push(doc.data());
-    //     //window.location.reload();
-    //   });
-    // });
+  computed: {
+    userFilter() {
+      return this[this.userFilterKey];
+    },
+    allAdmin() {
+      return this.pedidos.filter(ped => ped.atendido == false);
+    },
+    all() {
+      return this.pedidos.filter(
+        ped =>
+          ped.atendido == false &&
+          ped.idDistribuidor == firebase.auth().currentUser.uid
+      );
+    },
+    nearby() {
+      return this.pedidos.filter(ped => ped.atendido == true);
+    }
   }
 };
 </script>

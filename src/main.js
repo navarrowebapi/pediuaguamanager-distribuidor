@@ -4,11 +4,12 @@ import VueRouter from 'vue-router'
 import firebase from 'firebase'
 import firebaseui from 'firebaseui'
 import router from './router'
+import VueFire from 'vuefire'
 // import { config } from './helpers/firebaseConfig'
-import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
+// import Buefy from 'buefy'
+// import 'buefy/lib/buefy.css'
 Vue.use(VueRouter)
-
+Vue.use(VueFire)
 new Vue({
   router,
   created() {

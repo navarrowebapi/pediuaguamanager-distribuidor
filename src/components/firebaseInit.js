@@ -2,6 +2,6 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import { config } from '../helpers/firebaseConfig'
 
-const firebaseApp = firebase.initializeApp(config)
+//firebase.initializeApp(config)
 
-export default firebaseApp.firestore()
+//export default firebaseApp.database();
