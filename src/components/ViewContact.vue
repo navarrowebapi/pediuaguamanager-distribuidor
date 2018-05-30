@@ -2,15 +2,15 @@
   <section class="container">
 
         <h1>Distribuidor ÁguaJá</h1>
-  <button class="button is-danger"  v-on:click="userFilterKey = 'allAdmin'" :class="{ active: userFilterKey == 'allAdmin' }">Geral</button>
-  <button class="button is-primary"  v-on:click="userFilterKey = 'all'" :class="{ active: userFilterKey == 'all' }">Distribuidor logado</button>
-  <button class="button is-link" v-on:click="userFilterKey = 'nearby'" :class="{ active: userFilterKey == 'nearby' }">Atendidos</button>
+  <!-- <button class="button is-primary"    v-on:click="userFilterKey = 'geral'" :class="{ active: userFilterKey == 'geral' }">Geral</button> -->
+  <button class="button is-primary"   v-on:click="userFilterKey = 'all'"      :class="{ active: userFilterKey == 'all' }">Todos</button> 
+  <button class="button is-danger"      v-on:click="userFilterKey = 'atendido'"   :class="{ active: userFilterKey == 'atendido' }">Atendidos</button>
 
 <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID interno</th>
-              <th>Distribuidor</th>
+              <!-- <th>ID interno</th>
+              <th>Distribuidor</th> -->
               <th>Cliente</th>
               <th>Qtde 10 litros</th>
               <th>Qtde 20 litros</th>
@@ -20,9 +20,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="ped in userFilter">
-              <td>{{ped['.key']}}</td>
-              <td>{{ped.idDistribuidor}}</td>
+            <tr v-for="ped in userFilter" :key="ped['.key']">
+              <!-- <td>{{ped['.key']}}</td>
+              <td>{{ped.idDistribuidor}}</td> -->
               <td>{{ped.idCliente}}</td>
               <td>{{ped.qtde10}}</td>
               <td>{{ped.qtde20}}</td>
@@ -68,9 +68,7 @@ export default {
       moment: moment
     };
   },
-   created(){
-        console.log(firebase.auth().currentUser.uid);
-    },
+  created() {},
 
   methods: {
     atender: function(key) {
@@ -83,17 +81,17 @@ export default {
     userFilter() {
       return this[this.userFilterKey];
     },
-    allAdmin() {
+    geral() {
+      //console.log(firebase.auth().currentUser.uid);
+
       return this.pedidos.filter(ped => ped.atendido == false);
     },
     all() {
       return this.pedidos.filter(
-        ped =>
-          ped.atendido == false &&
-          ped.idDistribuidor == firebase.auth().currentUser.uid
+        ped => ped.atendido == false && ped.idDistribuidor == 1001
       );
     },
-    nearby() {
+    atendido() {
       return this.pedidos.filter(ped => ped.atendido == true);
     }
   }
