@@ -3,7 +3,7 @@
 <section class="hero is-medium">
   <!-- Hero head: will stick at the top -->
   <div class="hero-head">
-    <nav class="navbar">
+    <!-- <nav class="navbar">
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item">
@@ -17,20 +17,13 @@
         </div>
         <div id="navbarMenuHeroA" class="navbar-menu">
           <div class="navbar-end">
-            <!-- <a class="navbar-item is-active">
-              Home
-            </a>
-            <a class="navbar-item">
-              Novo
-            </a> -->
             <a class="navbar-item ">
                   <button class="button is-danger" @click="logOut">Sair</button>
             </a>
-            </span>
           </div>
         </div>
       </div>
-    </nav>
+    </nav> -->
   </div>
 
   <!-- Hero content: will be in the middle -->
@@ -75,30 +68,14 @@
        
         <label class="label">Marcas comercializadas</label>
 
-        <div id="marcasagua" >
-          <input type="checkbox" id="aguaboa" value="aguaboa" v-model="Distribuidor.Marcas">
-          <label for="jack">ÁguaBoa</label>
-          <input type="checkbox" id="Bioleve" value="Bioleve" v-model="Distribuidor.Marcas">
-          <label for="john">Bioleve</label>
-          <input type="checkbox" id="Bonafont" value="Bonafont" v-model="Distribuidor.Marcas">
-          <label for="mike">Bonafont</label>
-            <input type="checkbox" id="Cristal" value="Cristal" v-model="Distribuidor.Marcas">
-          <label for="jack">Cristal</label>
-          <input type="checkbox" id="Vitalícia" value="Vitalícia" v-model="Distribuidor.Marcas">
-          <label for="john">Vitalícia</label>
-          <input type="checkbox" id="Sofiazinha" value="Sofiazinha" v-model="Distribuidor.Marcas">
-          <label for="mike">Sofiazinha</label>
-              <input type="checkbox" id="Prata" value="Prata" v-model="Distribuidor.Marcas">
-          <label for="jack">Prata</label>
-          <input type="checkbox" id="Nestlé" value="Nestlé" v-model="Distribuidor.Marcas">
-          <label for="john">Nestlé</label>
-          <input type="checkbox" id="SantaRita" value="SantaRita" v-model="Distribuidor.Marcas">
-          <label for="mike">SantaRita</label>
-          <br>
-          <!-- <span>Marcas definidas: {{ Distribuidor.Marcas }}</span> -->
-        </div>
-
-      </div>
+      <div class="field-label is-normal">
+           <multiselect v-model="selecionadas" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" :preserve-search="true" 
+                 placeholder="Escolha as marcas comercializadas" @search-change="asyncFind">
+                 <template slot="tag" slot-scope="props"><span class="custom__tag"><span>{{ props.option.language }}</span><span class="custom__remove" @click="props.remove(props.option)">❌</span></span></template>
+           </multiselect>
+           <pre class="language-json"><code>{{ selecionadas  }}</code></pre>
+       </div>
+    </div>
 </div>
 
 
@@ -148,7 +125,12 @@
     <!-- Left empty for spacing -->
   </div>
   <div class="field-body">
-             <div class="field">
+          <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Responsável" v-model="Distribuidor.Responsavel" required>
+        </p>
+      </div>
+      <div class="field">
         <p class="control ">
           <input class="input" type="text" placeholder="E-mail" v-model="Distribuidor.Email" required>
         </p>
@@ -170,6 +152,8 @@
     <!-- Left empty for spacing -->
   </div>
   <div class="field-body">
+
+
 
       <div class="field">
         <p class="control ">
@@ -194,11 +178,27 @@
 <script>
 import Vue from "vue";
 import Toasted from "vue-toasted";
+import Multiselect from "vue-multiselect";
+Vue.component("multiselect", Multiselect);
+// import db from "./firebaseInit";
+
 import firebase from "firebase";
-import db from "./firebaseInit";
+var config = {
+  apiKey: "AIzaSyALMI7pi-U_ZNxERQzwmuYi-oU7tELAl4c",
+  authDomain: "pediuaguamobileapp.firebaseapp.com",
+  databaseURL: "https://pediuaguamobileapp.firebaseio.com",
+  projectId: "pediuaguamobileapp",
+  storageBucket: "",
+  messagingSenderId: "836786935618"
+};
+
+//firebase.initializeApp(config);
+var pedidosDb = firebase.database().ref("pedidos");
+
 Vue.use(Toasted);
 
 export default {
+  Multiselect,
   name: "new-contact",
   data() {
     return {
@@ -212,18 +212,40 @@ export default {
         Cidade: null,
         Estado: null,
         Fixo: null,
+        Responsavel: null,
         Celular: null,
         Email: null,
-        Marcas: []
-      }
+        Marcas: this.selecionadas
+      },
+      selecionadas: [],
+      options: [
+        "aguaboa",
+        "Bioleve",
+        "Bonafont",
+        "Cristal",
+        "Vitalícia",
+        "Sofiazinha",
+        "Prata",
+        "Nestlé",
+        "SantaRita"
+      ]
     };
   },
   methods: {
+    asyncFind () {
+      console.log(this.selecionadas);
+      
+    },
+    
     logOut() {
       firebase.auth().signOut();
       this.$router.push("Auth");
     },
     saveContact() {
+
+      this.afd.list('/distribuidores/').push(user);
+  
+
       db
         .collection("distribuidor")
         .add({
@@ -238,7 +260,7 @@ export default {
           Fixo: this.Distribuidor.Email,
           Celular: this.Distribuidor.Celular,
           Email: this.Distribuidor.Email,
-          Marcas: this.Distribuidor.Marcas
+          Marcas: this.value
         })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
@@ -263,7 +285,7 @@ export default {
   }
 };
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
 section {
   height: 100vh;

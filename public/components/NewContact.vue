@@ -1,0 +1,307 @@
+<template>
+
+<section class="hero is-medium">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <!-- <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <img src="../assets/logo.png" alt="Logo">
+          </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item ">
+                  <button class="button is-danger" @click="logOut">Sair</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav> -->
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container">
+
+<form @submit.prevent="saveContact">
+      <div class="field-label is-normal">
+      <label class="label">Dados da Empresa</label>
+    </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded">
+          <input class="input" type="text" placeholder="Nome" v-model="Distribuidor.Nome" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="CNPJ" v-model="Distribuidor.CNPJ" required>
+        </p>
+      </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="CEP" v-model="Distribuidor.CEP" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fa fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+       
+        <label class="label">Marcas comercializadas</label>
+
+      <div class="field-label is-normal">
+           <multiselect v-model="selecionadas" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" :preserve-search="true" 
+                 placeholder="Escolha as marcas comercializadas" @search-change="asyncFind">
+                 <template slot="tag" slot-scope="props"><span class="custom__tag"><span>{{ props.option.language }}</span><span class="custom__remove" @click="props.remove(props.option)">❌</span></span></template>
+           </multiselect>
+           <pre class="language-json"><code>{{ selecionadas  }}</code></pre>
+       </div>
+    </div>
+</div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded">
+          <input class="input" type="text" placeholder="Rua" v-model="Distribuidor.Rua" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Número" v-model="Distribuidor.Numero" required>
+        </p>
+      </div>
+  </div>
+</div>
+
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded">
+          <input class="input" type="text" placeholder="Bairro" v-model="Distribuidor.Bairro" required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Cidade" v-model="Distribuidor.Cidade" required>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Estado" v-model="Distribuidor.Estado" required>
+        </p>
+      </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label">
+    <!-- Left empty for spacing -->
+  </div>
+  <div class="field-body">
+          <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Responsável" v-model="Distribuidor.Responsavel" required>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="E-mail" v-model="Distribuidor.Email" required>
+        </p>
+      </div>
+         <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Fixo" v-model="Distribuidor.Fixo" required>
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+
+
+<div class="field is-horizontal">
+  <div class="field-label">
+    <!-- Left empty for spacing -->
+  </div>
+  <div class="field-body">
+
+
+
+      <div class="field">
+        <p class="control ">
+          <input class="input" type="text" placeholder="Cel" v-model="Distribuidor.Celular" required>
+        </p>
+      </div>
+    <div class="field">
+      <div class="control">
+           <button type="submit" class="button is-primary ">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>  
+    </div>
+  </div>
+
+</section>
+
+</template>
+
+<script>
+import Vue from "vue";
+import Toasted from "vue-toasted";
+import Multiselect from "vue-multiselect";
+Vue.component("multiselect", Multiselect);
+// import db from "./firebaseInit";
+
+import firebase from "firebase";
+var config = {
+  apiKey: "AIzaSyALMI7pi-U_ZNxERQzwmuYi-oU7tELAl4c",
+  authDomain: "pediuaguamobileapp.firebaseapp.com",
+  databaseURL: "https://pediuaguamobileapp.firebaseio.com",
+  projectId: "pediuaguamobileapp",
+  storageBucket: "",
+  messagingSenderId: "836786935618"
+};
+
+//firebase.initializeApp(config);
+var pedidosDb = firebase.database().ref("pedidos");
+
+Vue.use(Toasted);
+
+export default {
+  Multiselect,
+  name: "new-contact",
+  data() {
+    return {
+      Distribuidor: {
+        Nome: null,
+        CNPJ: null,
+        CEP: null,
+        Rua: null,
+        Numero: null,
+        Bairro: null,
+        Cidade: null,
+        Estado: null,
+        Fixo: null,
+        Responsavel: null,
+        Celular: null,
+        Email: null,
+        Marcas: this.selecionadas
+      },
+      selecionadas: [],
+      options: [
+        "aguaboa",
+        "Bioleve",
+        "Bonafont",
+        "Cristal",
+        "Vitalícia",
+        "Sofiazinha",
+        "Prata",
+        "Nestlé",
+        "SantaRita"
+      ]
+    };
+  },
+  methods: {
+    asyncFind () {
+      console.log(this.selecionadas);
+      
+    },
+    
+    logOut() {
+      firebase.auth().signOut();
+      this.$router.push("Auth");
+    },
+    saveContact() {
+
+      this.afd.list('/distribuidores/').push(user);
+  
+
+      db
+        .collection("distribuidor")
+        .add({
+          Nome: this.Distribuidor.Nome,
+          CNPJ: this.Distribuidor.CNPJ,
+          CEP: this.Distribuidor.CEP,
+          Rua: this.Distribuidor.Rua,
+          Numero: this.Distribuidor.Numero,
+          Bairro: this.Distribuidor.Bairro,
+          Cidade: this.Distribuidor.Cidade,
+          Estado: this.Distribuidor.Estado,
+          Fixo: this.Distribuidor.Email,
+          Celular: this.Distribuidor.Celular,
+          Email: this.Distribuidor.Email,
+          Marcas: this.value
+        })
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+          let toast = Vue.toasted.show("Dados adicionados com sucesso.", {
+            theme: "primary",
+            position: "top-center",
+            duration: 2000
+          });
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+          let toast = Vue.toasted.show(
+            "Erro ao salvar dados. Provável falta de Internet, tente novamente. Caso o erro persista, contate o adm.",
+            {
+              theme: "primary",
+              position: "top-center",
+              duration: 2000
+            }
+          );
+        });
+    }
+  }
+};
+</script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style scoped>
+section {
+  height: 100vh;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 30px 0;
+}
+
+.input {
+  height: 40px;
+}
+
+.hero.is-medium .hero-body {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+</style>

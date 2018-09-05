@@ -1,16 +1,66 @@
 <template>
   <section class="container">
 
-        <h1>Distribuidor ÁguaJá</h1>
+  <h1>Distribuidor ÁguaJá</h1>
   <!-- <button class="button is-primary"    v-on:click="userFilterKey = 'geral'" :class="{ active: userFilterKey == 'geral' }">Geral</button> -->
-  <button class="button is-primary"   v-on:click="userFilterKey = 'all'"      :class="{ active: userFilterKey == 'all' }">Todos</button> 
-  <button class="button is-danger"      v-on:click="userFilterKey = 'atendido'"   :class="{ active: userFilterKey == 'atendido' }">Atendidos</button>
+  <button type="button" class="button is-warning"  @click="geral()">Todos</button>
+  <button type="button" class="button is-success"  @click="atendidos()">Atendidos</button>
 
-<table class="table table-striped">
+<div class='columns is-multiline'>
+  <div v-for="ped in orderBy(ordenarDataMarca, 'timeStamp', -1 )" :key="ped['.key']" class='column is-3'>
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          {{ped.nome}} ({{ped.celular}})
+        </p>
+        <a href="#" class="card-header-icon" aria-label="more options">
+          <span class="icon">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </a>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <div v-if="ped.qtde10 > 0" class="columns">
+            <div class="column">
+              <figure class="image is-64x64">
+              <img src="/src/assets/20litros.png">
+            </figure>
+            </div>
+            <div class="column">
+              <p><br> 10 litros Qtde: <b>{{ped.qtde10}}</b></p>
+            </div>
+          </div>
+
+          <div v-if="ped.qtde20 > 0" class="columns">
+            <div class="column">
+              <figure class="image is-64x64">
+              <img src="/src/assets/10litros.png">
+            </figure>
+            </div>
+            <div class="column">
+              <p><br> 20 litros Qtde: <b>{{ped.qtde20}}</b></p>
+            </div>
+          </div>
+          
+          <div class="level-item has-text-centered">
+              <figure class='image is-128x128'><img :src = ped.marcaEscolhida /></figure>
+          </div>
+          chegada: <time datetime="2016-1-1">{{moment(ped.timeStamp).format("DD/MM/YYYY HH:mm:ss")}}</time>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item" @click="atender(ped['.key'])">Atender</a>  
+        <a href="#" class="card-footer-item"></a>
+        <a href="#" class="card-footer-item">Espera</a>
+      </footer>
+    </div>
+  </div>
+</div>  
+
+<!-- <table class="table table-striped">
           <thead>
             <tr>
-              <!-- <th>ID interno</th>
-              <th>Distribuidor</th> -->
               <th>Cliente</th>
               <th>Qtde 10 litros</th>
               <th>Qtde 20 litros</th>
@@ -21,8 +71,6 @@
           </thead>
           <tbody>
             <tr v-for="ped in userFilter" :key="ped['.key']">
-              <!-- <td>{{ped['.key']}}</td>
-              <td>{{ped.idDistribuidor}}</td> -->
               <td>{{ped.idCliente}}</td>
               <td>{{ped.qtde10}}</td>
               <td>{{ped.qtde20}}</td>
@@ -31,9 +79,7 @@
               <td>{{ moment(ped.timeStamp).fromNow()}}</td>
             </tr>
           </tbody>
-        </table>
-
-
+        </table> -->
   </section>
 
 </template>
@@ -56,43 +102,55 @@ var pedidosDb = firebase.database().ref("pedidos");
 
 export default {
   name: "home",
-
   firebase: {
     pedidos: pedidosDb
   },
-
   data() {
     return {
+      pedidosPorDataMarca: "",
       pedidos: "",
-      userFilterKey: "all",
+      userFilterKey: "todos",
+      teste: false,
       moment: moment
     };
   },
   created() {},
-
   methods: {
     atender: function(key) {
       pedidosDb.child(key).update({
         atendido: true
       });
+    },
+    geral: function() {
+      this.teste = false;
+    },
+    atendidos: function() {
+      this.teste = true;
     }
   },
   computed: {
     userFilter() {
-      return this[this.userFilterKey];
+      return this.pedidos;
+      // return this[this.userFilterKey];
     },
-    geral() {
-      //console.log(firebase.auth().currentUser.uid);
+    ordenarDataMarca() {
+      this.pedidos.forEach(element => {
+        if (element.marcaEscolhida == 1) {
+          element.marcaEscolhida = "./src/assets/ibira.png";
+        } else if (element.marcaEscolhida == 2) {
+          element.marcaEscolhida = "./src/assets/bonafont.png";
+        } else if (element.marcaEscolhida == 3) {
+          element.marcaEscolhida = "./src/assets/aguaboa.png";
+        } else if (element.marcaEscolhida == 4) {
+          element.marcaEscolhida = "./src/assets/indaia.png";
+        } else if (element.marcaEscolhida == 5) {
+          element.marcaEscolhida = "./src/assets/prata.png";
+        }
+      });
 
-      return this.pedidos.filter(ped => ped.atendido == false);
-    },
-    all() {
       return this.pedidos.filter(
-        ped => ped.atendido == false && ped.idDistribuidor == 1001
+        ped => ped.atendido == this.teste && ped.idDistribuidor == 1001
       );
-    },
-    atendido() {
-      return this.pedidos.filter(ped => ped.atendido == true);
     }
   }
 };

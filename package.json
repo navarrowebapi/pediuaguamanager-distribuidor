@@ -1,5 +1,5 @@
 {
-  "name": "GerenciadorDistribuidor",
+  "name": "com.larum.gerenciamento",
   "description": "Administração de cada distribuidor",
   "version": "1.0.0",
   "author": "navarro.fabio@gmail.com <navarro.fabio@gmail.com>",
@@ -14,8 +14,10 @@
     "firebaseui": "^2.5.1",
     "moment": "^2.22.0",
     "vue": "^2.4.4",
+    "vue-multiselect": "^2.1.0",
     "vue-router": "^3.0.1",
     "vue-toasted": "^1.1.24",
+    "vue2-filters": "^0.3.0",
     "vuefire": "^1.4.5"
   },
   "browserslist": [

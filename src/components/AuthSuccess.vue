@@ -15,12 +15,12 @@ export default {
         }
     },
     created(){
-        this.user = firebase.auth().currentUser;
-        this.$router.push('distribuidores') 
-        if(this.user){
-            this.name = this.user.displayName;
+        // this.user = firebase.auth().currentUser;
+        // this.$router.push('distribuidores') 
+        // if(this.user){
+        //     this.name = this.user.displayName;
             
-        }
+        // }
     },
     methods:{
         logOut(){
