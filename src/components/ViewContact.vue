@@ -44,7 +44,7 @@
           </div>
           
           <div class="level-item has-text-centered">
-              <figure class='image is-128x128'><img :src = ped.marcaEscolhida /></figure>
+              <figure class='image is-64x64'><img :src = ped.marcaEscolhida /></figure>
           </div>
           chegada: <time datetime="2016-1-1">{{moment(ped.timeStamp).format("DD/MM/YYYY HH:mm:ss")}}</time>
         </div>
