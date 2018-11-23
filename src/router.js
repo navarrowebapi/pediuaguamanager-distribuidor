@@ -17,6 +17,8 @@ const router = new VueRouter({
 
         { path: '/distribuidores', component : ViewContact},
 
+        // { name: 'distribuidores', path: '/distribuidores/:id', component : ViewContact},
+
     ]
 
 });

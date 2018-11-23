@@ -85,6 +85,8 @@
 </template>
 
 <script>
+import { globalStore } from "../main.js";
+import { serverBus } from '../main';
 import * as moment from "moment";
 import "moment/locale/pt-br";
 import firebase from "firebase";
@@ -107,6 +109,7 @@ export default {
   },
   data() {
     return {
+      id: 0,
       pedidosPorDataMarca: "",
       pedidos: "",
       userFilterKey: "todos",
@@ -114,7 +117,13 @@ export default {
       moment: moment
     };
   },
-  created() {},
+
+  created() {
+    //this.id = this.$route.params.id;
+    //console.log("ID vindo do login" + this.id);
+    //console.log(globalStore.globalvar);
+    //serverBus.$emit('serverSelected', "teste");
+  },
   methods: {
     atender: function(key) {
       pedidosDb.child(key).update({
@@ -149,7 +158,8 @@ export default {
       });
 
       return this.pedidos.filter(
-        ped => ped.atendido == this.teste && ped.idDistribuidor == 1001
+        ped =>
+          ped.atendido == this.teste &&  ped.idDistribuidor == globalStore.globalvar //"navarro.fabio@gmail.com"
       );
     }
   }
