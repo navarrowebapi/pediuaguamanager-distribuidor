@@ -3,8 +3,9 @@
 
   <h1>Distribuidor ÁguaJá</h1>
   <!-- <button class="button is-primary"    v-on:click="userFilterKey = 'geral'" :class="{ active: userFilterKey == 'geral' }">Geral</button> -->
-  <button type="button" class="button is-warning"  @click="geral()">Todos</button>
+  <button type="button" class="button is-info"     @click="geral()">Todos</button>
   <button type="button" class="button is-success"  @click="atendidos()">Atendidos</button>
+  <button type="button" class="button is-warning"  @click="emespera()">Em Espera</button>
 
 <div class='columns is-multiline'>
   <div v-for="ped in orderBy(ordenarDataMarca, 'timeStamp', -1 )" :key="ped['.key']" class='column is-3'>
@@ -47,12 +48,14 @@
               <figure class='image is-64x64'><img :src = ped.marcaEscolhida /></figure>
           </div>
           chegada: <time datetime="2016-1-1">{{moment(ped.timeStamp).format("DD/MM/YYYY HH:mm:ss")}}</time>
+          <p>atendido: {{ped.atendido}}</p>
+          <p>espera: {{ped.espera}}</p>
         </div>
       </div>
       <footer class="card-footer">
         <a href="#" class="card-footer-item" @click="atender(ped['.key'])">Atender</a>  
         <a href="#" class="card-footer-item"></a>
-        <a href="#" class="card-footer-item">Espera</a>
+        <a href="#" class="card-footer-item" @click="esperar(ped['.key'])">Espera</a>  
       </footer>
     </div>
   </div>
@@ -86,7 +89,7 @@
 
 <script>
 import { globalStore } from "../main.js";
-import { serverBus } from '../main';
+import { serverBus } from "../main";
 import * as moment from "moment";
 import "moment/locale/pt-br";
 import firebase from "firebase";
@@ -113,7 +116,8 @@ export default {
       pedidosPorDataMarca: "",
       pedidos: "",
       userFilterKey: "todos",
-      teste: false,
+      teste: null,
+      espera: false,
       moment: moment
     };
   },
@@ -125,16 +129,24 @@ export default {
     //serverBus.$emit('serverSelected', "teste");
   },
   methods: {
+    esperar: function(key) {
+      pedidosDb.child(key).update({
+        espera: true
+      });
+    },
     atender: function(key) {
       pedidosDb.child(key).update({
         atendido: true
       });
     },
     geral: function() {
-      this.teste = false;
+      this.teste = null;
     },
     atendidos: function() {
       this.teste = true;
+    },
+    emespera: function() {
+      this.teste = false;
     }
   },
   computed: {
@@ -157,10 +169,27 @@ export default {
         }
       });
 
-      return this.pedidos.filter(
-        ped =>
-          ped.atendido == this.teste &&  ped.idDistribuidor == globalStore.globalvar //"navarro.fabio@gmail.com"
-      );
+      console.log("ESTADO " + this.teste);
+      if (this.teste == null) {//TODOS
+        return this.pedidos.filter(
+          ped =>
+            ped.atendido == null &&
+            ped.espera == null &&
+            ped.idDistribuidor == globalStore.globalvar
+        );
+      } else if(this.teste == false) { //ESPERA
+        return this.pedidos.filter(
+          ped =>
+            ped.espera == true &&
+            ped.idDistribuidor == globalStore.globalvar
+        );
+      } else if(this.teste == true) { //ATENDIDOS
+        return this.pedidos.filter(
+          ped =>
+            ped.atendido == true &&
+            ped.idDistribuidor == globalStore.globalvar
+        );
+      } 
     }
   }
 };
