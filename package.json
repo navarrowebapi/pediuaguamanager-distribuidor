@@ -5,6 +5,9 @@
   "author": "navarro.fabio@gmail.com <navarro.fabio@gmail.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "8.11.0"
+  },
   "scripts": {
     "start:dev": "webpack-dev-server",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
