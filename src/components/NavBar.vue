@@ -32,7 +32,7 @@ import { globalStore } from "../main";
 export default {
   data() {
     return {
-      name: "",
+      name: '',
       usuario: globalStore.globalvar,
       server:null
     };
