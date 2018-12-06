@@ -9,14 +9,10 @@
     "node": "8.11.0"
   },
   "scripts": {
-    "start:dev": "webpack-dev-server",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "serve": "vue-cli-service serve",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "producao": "webpack --mode production ./src/main.js --output ./dist/main.js",
-    "build2": "vue-cli-service build",
-    "postinstall": "npm run build",
-    "start": "node server.js"
+    "build": "vue-cli-service build",
+    "production": "webpack --progress --hide-modules"
   },
   "dependencies": {
     "@vue/cli-service": "^3.0.4",

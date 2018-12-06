@@ -2,9 +2,9 @@ var path = require('path')
 var webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'development') {
     module.exports = {
-        //   mode: 'development',
+        mode: 'production',
         entry: './src/main.js',
         output: {
             path: path.resolve(__dirname, './dist'),
@@ -58,26 +58,19 @@ if (process.env.NODE_ENV === 'development') {
         },
         devtool: '#eval-source-map'
     }
-}
+//}
 
-if (process.env.NODE_ENV === 'production') {
+//if (process.env.NODE_ENV === 'production') {
 
     module.exports.devtool = '#source-map'
     // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat(
-        [
+    module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             }
         }),
-        new resolve({
-            alias: {
-                'vue$': 'vue/dist/vue.esm.js',
-                '@': resolve('src'),
-            },
-            extensions: ['*', '.js', '.vue', '.json']
-        }),
+        
         new UglifyJsPlugin({
             cache: true,
             parallel: true,
@@ -98,4 +91,4 @@ if (process.env.NODE_ENV === 'production') {
             minimize: true
         })
     ])
-}
+//}
