@@ -9,9 +9,8 @@
     "node": "8.11.0"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.dev.js",
     "production": "webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -22,7 +21,7 @@
     "firebaseui": "^2.5.1",
     "moment": "^2.22.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "vue": "^2.4.4",
+    "vue": "^2.5.17",
     "vue-multiselect": "^2.1.0",
     "vue-router": "^3.0.1",
     "vue-toasted": "^1.1.24",
@@ -42,16 +41,18 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "css-loader": "^0.28.11",
     "express": "^4.16.4",
     "file-loader": "^1.1.4",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^6.0.6",
     "serve-static": "^1.13.2",
-    "vue-loader": "^14.2.2",
-    "vue-template-compiler": "^2.4.4",
+    "vue-loader": "^14.2.3",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.5.17",
     "webpack": "^4.26.0",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.10"
   }
 }

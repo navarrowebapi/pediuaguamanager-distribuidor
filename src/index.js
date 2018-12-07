@@ -7,7 +7,7 @@ import router from './router'
 import VueFire from 'vuefire'
 import Vue2Filters from 'vue2-filters'
 import { config } from "./helpers/firebaseConfig";
-import NavBar from '@/components/NavBar.vue'
+import NavBar from './components/NavBar.vue'
 
 
 Vue.use(Vue2Filters)
