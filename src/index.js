@@ -26,7 +26,7 @@ export const globalStore = new Vue({
 new Vue({
   router,
   created() {
-    //firebase.initializeApp(config);
+    firebase.initializeApp(config);
 
     firebase.auth().onAuthStateChanged((user) => {
       //console.log(user.email)

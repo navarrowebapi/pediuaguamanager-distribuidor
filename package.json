@@ -9,6 +9,7 @@
     "node": "8.11.0"
   },
   "scripts": {
+    "dev-test": "webpack-dev-server --open --hot --config webpack.config.js",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
     "production": "webpack --progress --hide-modules"

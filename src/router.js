@@ -5,7 +5,7 @@ import ViewContact from '../src/components/ViewContact.vue'
 import NewContact from '../src/components/NewContact.vue'
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     routes: [
         { path: '/', component : Auth},
 

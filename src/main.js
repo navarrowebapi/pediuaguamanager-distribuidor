@@ -33,7 +33,7 @@ new Vue({
       if (user) {
         globalStore.globalvar = user.email;
         serverBus.$emit('serverSelected', user.email);
-        this.$router.push('/distribuidores/')
+        this.$router.push('/distribuidores')
         //this.$router.push({ name: 'distribuidores', params: { id: user.email }})
       } else {
         this.$router.push('/auth')
