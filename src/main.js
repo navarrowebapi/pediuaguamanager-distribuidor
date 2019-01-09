@@ -36,7 +36,7 @@ new Vue({
         this.$router.push('/distribuidores')
         //this.$router.push({ name: 'distribuidores', params: { id: user.email }})
       } else {
-        this.$router.push('/auth')
+        //this.$router.push('/auth')
       }
     });
   },

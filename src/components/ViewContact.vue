@@ -3,7 +3,7 @@
 
   <h1>Distribuidor ÁguaJá</h1>
   <!-- <button class="button is-primary"    v-on:click="userFilterKey = 'geral'" :class="{ active: userFilterKey == 'geral' }">Geral</button> -->
-  <button type="button" class="button is-info"     @click="geral()">Todos</button>
+  <button type="button" class="button is-info"     @click="geral()">Novos Pedidos</button>
   <button type="button" class="button is-success"  @click="atendidos()">Atendidos</button>
   <button type="button" class="button is-warning"  @click="emespera()">Em Espera</button>
 
@@ -131,12 +131,14 @@ export default {
   methods: {
     esperar: function(key) {
       pedidosDb.child(key).update({
-        espera: true
+        espera: true,
+        atendido: false
       });
     },
     atender: function(key) {
       pedidosDb.child(key).update({
-        atendido: true
+        atendido: true,
+        espera: false
       });
     },
     geral: function() {
